@@ -4,25 +4,28 @@ service:
   org: io.mipha
 
 custom:
+  secrets: ${file(secrets.json)}
   webpack:
     webpackConfig: ./webpack/webpack.config.js
     includeModules: true
 
-plugins:
-  - serverless-webpack
-
 provider:
   name: aws
   runtime: nodejs12.x
+  region: us-east-1
   apiGateway:
     minimumCompressionSize: 1024
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    SEAFOOD_CROSSING_DATABASE: ${self:custom.secrets.SEAFOOD_CROSSING_DATABASE}
 
 functions:
-  hello:
-    handler: src/index.example
+  createTravelDestination:
+    handler: src/index.createTravelDestination
     events:
       - http:
           method: get
-          path: hello
+          path: /travel/destination/create
+
+plugins:
+  - serverless-webpack

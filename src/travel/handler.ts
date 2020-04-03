@@ -4,15 +4,15 @@
  * @description Handler
  */
 
-import { APIGatewayProxyEvent, APIGatewayProxyHandler, Context } from 'aws-lambda';
+import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult, Context } from 'aws-lambda';
 
-export const example: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent, _context: Context) => {
+export const createTravelDestination: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent, _context: Context): Promise<APIGatewayProxyResult> => {
 
     return {
         statusCode: 200,
         body: JSON.stringify({
-            message: 'Cool',
             input: event,
+            env: process.env.SEAFOOD_CROSSING_DATABASE,
         }, null, 2),
     };
 };

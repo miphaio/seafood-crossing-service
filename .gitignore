@@ -8,6 +8,7 @@ lerna-debug.log*
 jspm_packages
 
 temp.txt
+secrets.json
 
 # Serverless directories
 .serverless
