@@ -1,0 +1,17 @@
+{
+    "cSpell.words": [
+        "Unmount",
+        "WMXPY",
+        "clazz",
+        "codecov",
+        "docz",
+        "esnext",
+        "forin",
+        "mipha",
+        "sudoo",
+        "triforce",
+        "tshook"
+    ],
+    "tslint.configFile": "typescript/tslint.json",
+    "files.eol": "\n"
+}

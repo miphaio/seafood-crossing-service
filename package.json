@@ -1,0 +1,42 @@
+{
+  "name": "@mipha/seafood-crossing-service",
+  "version": "1.5.0",
+  "description": ":tropical_fish: Service for seafood crossing",
+  "directories": {
+    "doc": "docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miphaio/seafood-crossing-service.git"
+  },
+  "author": "WMXPY",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/miphaio/seafood-crossing-service/issues"
+  },
+  "homepage": "https://github.com/miphaio/seafood-crossing-service#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@sudoo/io": "^1.7.0",
+    "@sudoo/mock": "^1.3.0",
+    "@sudoo/triforce": "^2.2.1"
+  },
+  "nyc": {
+    "extension": [
+      ".ts"
+    ],
+    "include": [
+      "src/**/*.ts"
+    ],
+    "instrument": true,
+    "reporter": [
+      "json",
+      "text-summary"
+    ],
+    "report-dir": "coverage",
+    "require": [
+      "./test/tshook.js"
+    ],
+    "sourceMap": true
+  }
+}
