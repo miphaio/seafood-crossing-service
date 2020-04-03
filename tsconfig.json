@@ -6,7 +6,6 @@
         "downlevelIteration": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "outDir": "../app",
         "lib": [
             "dom",
             "es5",
@@ -26,11 +25,11 @@
         "target": "es6"
     },
     "exclude": [
-        "../node_modules",
-        "../script",
-        "../test"
-    ],
-    "include": [
-        "../src/**/*"
+        "node_modules",
+        "test",
+        ".serverless/**/*",
+        ".webpack/**/*",
+        "_warmup/**/*",
+        ".vscode/**/*"
     ]
 }

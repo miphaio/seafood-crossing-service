@@ -19,6 +19,13 @@ build:
 	@echo "[INFO] Building for production"
 	@NODE_ENV=production $(tsc) --p $(build)
 
+deploy:
+	@echo "[INFO] Deploy"
+	@NODE_ENV=production \
+	AWS_ACCESS_KEY_ID=$(ACKI) \
+	AWS_SECRET_ACCESS_KEY=$(ASAK) \
+	serverless deploy
+
 tests:
 	@echo "[INFO] Testing with Mocha"
 	@NODE_ENV=test $(mocha)
