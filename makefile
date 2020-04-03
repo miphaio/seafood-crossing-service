@@ -26,6 +26,13 @@ deploy:
 	AWS_SECRET_ACCESS_KEY=$(ASAK) \
 	serverless deploy
 
+remove:
+	@echo "[INFO] Remove"
+	@NODE_ENV=production \
+	AWS_ACCESS_KEY_ID=$(ACKI) \
+	AWS_SECRET_ACCESS_KEY=$(ASAK) \
+	serverless remove
+
 tests:
 	@echo "[INFO] Testing with Mocha"
 	@NODE_ENV=test $(mocha)
