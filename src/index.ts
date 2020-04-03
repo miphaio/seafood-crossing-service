@@ -6,4 +6,5 @@
 
 import 'source-map-support/register';
 
-export { hello } from "./functions/hello";
+export * from "./travel/handler";
+

@@ -11,9 +11,6 @@ install:
   - make install
   - npm install codecov nyc -g
 
-before_script:
-  - node -v
-
 script:
   - nyc mocha
 
