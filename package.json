@@ -16,6 +16,7 @@
   },
   "homepage": "https://github.com/miphaio/seafood-crossing-service#readme",
   "dependencies": {
+    "@types/source-map-support": "^0.5.1",
     "source-map-support": "^0.5.16"
   },
   "devDependencies": {

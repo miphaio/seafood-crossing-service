@@ -1,12 +1,10 @@
 /**
  * @author WMXPY
- * @namespace Service
- * @description Handler
- * @override Unit Test
+ * @namespace Function
+ * @description Hello
  */
 
 import { APIGatewayProxyHandler } from 'aws-lambda';
-import 'source-map-support/register';
 
 export const hello: APIGatewayProxyHandler = async (event, _context) => {
   return {

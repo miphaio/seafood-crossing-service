@@ -10,7 +10,6 @@ const nodeExternals = require('webpack-node-externals');
 
 const isLocal = serverless_webpack.lib.webpack.isLocal;
 const entries = serverless_webpack.lib.entries;
-
 const mappedEntries = Object.keys(entries).reduce((previous, key) => {
   return {
     ...previous,
@@ -18,7 +17,6 @@ const mappedEntries = Object.keys(entries).reduce((previous, key) => {
   }
 }, {});
 
-console.log(serverless_webpack.lib.entries, mappedEntries);
 module.exports = {
   context: __dirname,
   mode: isLocal ? 'development' : 'production',
@@ -38,7 +36,6 @@ module.exports = {
   externals: [nodeExternals()],
   module: {
     rules: [
-      // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
       {
         test: /\.(tsx?)$/,
         loader: 'ts-loader',
