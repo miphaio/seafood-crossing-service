@@ -8,6 +8,8 @@ custom:
   webpack:
     webpackConfig: ./webpack/webpack.config.js
     includeModules: true
+  serverless-offline:
+    httpPort: 4000
 
 provider:
   name: aws
@@ -24,8 +26,9 @@ functions:
     handler: src/index.createTravelDestination
     events:
       - http:
-          method: get
+          method: post
           path: /travel/destination/create
 
 plugins:
   - serverless-webpack
+  - serverless-offline

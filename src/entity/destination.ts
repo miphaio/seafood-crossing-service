@@ -24,6 +24,9 @@ export type DestinationConfig = {
     readonly accessCode: string;
     readonly _account: ObjectID;
 
+    title: string;
+    description: string;
+
     capacity: number;
     duration: number;
 };
@@ -33,6 +36,7 @@ export type DestinationEntity = {
     active: boolean;
 
     occupancies: DestinationOccupancy[];
+    occupanciesLength: number,
     reports: DestinationReport[];
 
     readonly createdAt: Date;

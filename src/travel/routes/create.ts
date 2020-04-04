@@ -11,15 +11,19 @@ import { DestinationModel } from "../../model/destination";
 import { createOrGetAccount } from "../../service/account";
 import { createUnsavedDestination } from "../../service/destination";
 
-export type CreateTravelDestinationRouteRequest = {
+export type CreateTravelDestinationRequest = {
 
     readonly identifier: string;
     readonly device: DeviceInformation;
 
+    readonly title: string;
+    readonly description: string;
+
     readonly accessCode: string;
+    readonly duration: number;
 };
 
-export const createTravelDestinationRoute = async (request: CreateTravelDestinationRouteRequest): Promise<Record<string, any>> => {
+export const createTravelDestinationRoute = async (request: CreateTravelDestinationRequest): Promise<Record<string, any>> => {
 
     const closeDatabase: CloseDatabaseFunction = await connectDatabase();
 
@@ -31,6 +35,7 @@ export const createTravelDestinationRoute = async (request: CreateTravelDestinat
     await closeDatabase();
 
     return {
+        identifier: account.identifier,
         created: true,
     };
 };

@@ -20,3 +20,15 @@ export const createUnsavedDestination = (accountId: ObjectID, accessCode: string
 
     return new DestinationModel(config);
 };
+
+export const fetchActiveAvailableDestinations = async (occupancyLimit: number): Promise<DestinationModel[]> => {
+
+    const destinations: DestinationModel[] = await DestinationModel.find({
+        active: true,
+        occupanciesLength: {
+            $lt: occupancyLimit,
+        },
+    });
+
+    return destinations;
+};

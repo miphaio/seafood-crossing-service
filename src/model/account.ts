@@ -9,6 +9,10 @@ import { AccountEntity, DeviceInformation } from "../entity/account";
 
 const DeviceSchema = new Schema({
 
+    name: {
+        type: String,
+        required: true,
+    },
     model: {
         type: String,
         required: true,

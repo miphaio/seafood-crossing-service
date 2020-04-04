@@ -51,6 +51,14 @@ const DestinationSchema: Schema = new Schema(
             type: String,
             required: true,
         },
+        title: {
+            type: String,
+            required: true,
+        },
+        description: {
+            type: String,
+            required: true,
+        },
         capacity: {
             type: Number,
             required: true,
@@ -63,6 +71,12 @@ const DestinationSchema: Schema = new Schema(
             type: [OccupancySchema],
             required: true,
             default: [],
+        },
+        occupanciesLength: {
+            type: Number,
+            required: true,
+            default: 0,
+            index: true,
         },
         reports: {
             type: [ReportSchema],

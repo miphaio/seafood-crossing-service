@@ -9,15 +9,11 @@ mocha := node_modules/.bin/mocha
 
 .IGNORE: clean-linux
 
-main: dev
+main: start-offline
 
-dev:
+start-offline:
 	@echo "[INFO] Building for development"
-	@NODE_ENV=development $(tsc) --p $(dev)
-
-build:
-	@echo "[INFO] Building for production"
-	@NODE_ENV=production $(tsc) --p $(build)
+	@NODE_ENV=development serverless offline
 
 deploy:
 	@echo "[INFO] Deploy"
