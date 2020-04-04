@@ -6,7 +6,9 @@
 
 import * as Mongoose from "mongoose";
 
-export const connectDatabase = (): (() => void) => {
+export type CloseDatabaseFunction = () => Promise<void>;
+
+export const connectDatabase = async (): Promise<CloseDatabaseFunction> => {
 
     const dbLink: string | undefined = process.env.SEAFOOD_CROSSING_DATABASE;
 
@@ -14,7 +16,7 @@ export const connectDatabase = (): (() => void) => {
         throw new Error('dbLink');
     }
 
-    Mongoose.connect(
+    await Mongoose.connect(
         dbLink,
         {
             useFindAndModify: false,
@@ -24,8 +26,7 @@ export const connectDatabase = (): (() => void) => {
         },
     );
 
-    return () => {
+    return async () => {
         Mongoose.disconnect();
     };
 };
-

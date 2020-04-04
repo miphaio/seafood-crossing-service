@@ -7,6 +7,34 @@
 import { Document, model, Model, Schema } from "mongoose";
 import { DestinationEntity } from "../entity/destination";
 
+const OccupancySchema = new Schema({
+
+    at: {
+        type: Date,
+        required: true,
+    },
+    _account: {
+        type: Schema.Types.ObjectId,
+        required: true,
+    },
+}, { _id: false });
+
+const ReportSchema = new Schema({
+
+    at: {
+        type: Date,
+        required: true,
+    },
+    reason: {
+        type: String,
+        required: true,
+    },
+    _account: {
+        type: Schema.Types.ObjectId,
+        required: true,
+    },
+}, { _id: false });
+
 const DestinationSchema: Schema = new Schema(
     {
         active: {
@@ -14,6 +42,32 @@ const DestinationSchema: Schema = new Schema(
             required: true,
             default: true,
             index: true,
+        },
+        _account: {
+            type: Schema.Types.ObjectId,
+            required: true,
+        },
+        accessCode: {
+            type: String,
+            required: true,
+        },
+        capacity: {
+            type: Number,
+            required: true,
+        },
+        duration: {
+            type: Number,
+            required: true,
+        },
+        occupancies: {
+            type: [OccupancySchema],
+            required: true,
+            default: [],
+        },
+        reports: {
+            type: [ReportSchema],
+            required: true,
+            default: [],
         },
     },
     {

@@ -14,14 +14,12 @@ export type AccountConfig = {
 
     readonly identifier: string;
 
-    devices?: DeviceInformation[];
+    devices: DeviceInformation[];
 };
 
 export type AccountEntity = {
 
     active: boolean;
-
-    devices: DeviceInformation[];
 
     readonly createdAt: Date;
     readonly updatedAt: Date;

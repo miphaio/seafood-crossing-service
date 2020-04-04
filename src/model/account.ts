@@ -5,9 +5,9 @@
  */
 
 import { Document, model, Model, Schema } from "mongoose";
-import { AccountEntity } from "../entity/account";
+import { AccountEntity, DeviceInformation } from "../entity/account";
 
-export const DeviceSchema = new Schema({
+const DeviceSchema = new Schema({
 
     model: {
         type: String,
@@ -31,6 +31,7 @@ const AccountSchema: Schema = new Schema(
             type: String,
             required: true,
             index: true,
+            unique: true,
         },
         devices: {
             type: [DeviceSchema],
@@ -47,6 +48,28 @@ const AccountSchema: Schema = new Schema(
 );
 
 export type AccountModel = {
+    hasDevice(device: DeviceInformation): boolean;
+    addDevice(device: DeviceInformation): AccountModel;
 } & AccountEntity & Document;
+
+
+AccountSchema.methods.hasDevice = function (this: AccountModel, target: DeviceInformation): boolean {
+
+    for (const device of this.devices) {
+        if (device.matcher === target.matcher) {
+            return device.model === target.model;
+        }
+    }
+    return false;
+};
+
+AccountSchema.methods.addDevice = function (this: AccountModel, target: DeviceInformation): boolean {
+
+    this.devices = [
+        ...this.devices,
+        target,
+    ];
+    return false;
+};
 
 export const AccountModel: Model<AccountModel> = model<AccountModel>('Account', AccountSchema);

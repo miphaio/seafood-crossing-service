@@ -16,6 +16,8 @@
   },
   "homepage": "https://github.com/miphaio/seafood-crossing-service#readme",
   "dependencies": {
+    "@sudoo/extract": "^1.4.2",
+    "@sudoo/magic": "^1.6.0",
     "@sudoo/random": "^2.1.1",
     "mongoose": "^5.9.7",
     "source-map-support": "^0.5.16"
