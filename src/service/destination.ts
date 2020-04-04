@@ -9,13 +9,24 @@ import { ObjectID } from "bson";
 import { DestinationConfig } from "../entity/destination";
 import { DestinationModel } from "../model/destination";
 
-export const createUnsavedDestination = (accountId: ObjectID, accessCode: string): DestinationModel => {
+export const createUnsavedDestination = (accountId: ObjectID, options: {
+    readonly accessCode: string;
+    readonly title: string;
+    readonly description: string;
+}): DestinationModel => {
+
+    const now: number = Date.now();
+    const duration: number = TIME_IN_MILLISECONDS.MINUTE * 5;
+    const expireAt: Date = new Date(now + duration);
 
     const config: DestinationConfig = {
         _account: accountId,
-        accessCode,
+        accessCode: options.accessCode,
+        title: options.title,
+        description: options.description,
         capacity: 8,
-        duration: TIME_IN_MILLISECONDS.MINUTE * 5,
+        duration,
+        expireAt,
     };
 
     return new DestinationModel(config);

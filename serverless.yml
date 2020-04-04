@@ -28,6 +28,12 @@ functions:
       - http:
           method: post
           path: /travel/destination/create
+  fetchTravelDestionation:
+    handler: src/index.fetchTravelDestination
+    events:
+      - http:
+          method: post
+          path: /travel/destination/fetch
 
 plugins:
   - serverless-webpack

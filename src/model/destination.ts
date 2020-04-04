@@ -67,6 +67,10 @@ const DestinationSchema: Schema = new Schema(
             type: Number,
             required: true,
         },
+        expireAt: {
+            type: Date,
+            required: true,
+        },
         occupancies: {
             type: [OccupancySchema],
             required: true,

@@ -29,6 +29,7 @@ export type DestinationConfig = {
 
     capacity: number;
     duration: number;
+    expireAt: Date;
 };
 
 export type DestinationEntity = {

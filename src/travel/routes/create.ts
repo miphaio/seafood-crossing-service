@@ -29,7 +29,11 @@ export const createTravelDestinationRoute = async (request: CreateTravelDestinat
 
     const account: AccountModel = await createOrGetAccount(request.identifier, request.device);
 
-    const destination: DestinationModel = createUnsavedDestination(account._id, request.accessCode);
+    const destination: DestinationModel = createUnsavedDestination(account._id, {
+        accessCode: request.accessCode,
+        title: request.title,
+        description: request.description,
+    });
 
     await destination.save();
     await closeDatabase();
