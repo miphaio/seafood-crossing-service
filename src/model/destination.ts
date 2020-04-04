@@ -5,7 +5,8 @@
  */
 
 import { Document, model, Model, Schema } from "mongoose";
-import { DestinationEntity } from "../entity/destination";
+import { DestinationEntity, DestinationOccupancy } from "../entity/destination";
+import { ObjectID } from "bson";
 
 const OccupancySchema = new Schema({
 
@@ -97,6 +98,38 @@ const DestinationSchema: Schema = new Schema(
 );
 
 export type DestinationModel = {
+    updateOccupanciesLength(): number;
+    addOccupancy(account: ObjectID): DestinationModel;
 } & DestinationEntity & Document;
+
+DestinationSchema.methods.updateOccupanciesLength = function (this: DestinationModel): number {
+
+    const now: number = Date.now();
+    const occupanciesCount: number = this.occupancies.reduce((previous: number, current: DestinationOccupancy) => {
+        const at: number = current.at.getTime();
+        const expireAt: number = at + this.duration;
+
+        if (expireAt < now) {
+            return previous + 1;
+        }
+        return previous;
+    }, 0);
+
+    this.occupanciesLength = occupanciesCount;
+    return occupanciesCount;
+};
+
+DestinationSchema.methods.addOccupancy = function (this: DestinationModel, account: ObjectID): DestinationModel {
+
+    this.occupancies = [
+        ...this.occupancies,
+        {
+            at: new Date(),
+            _account: account,
+        }
+    ]
+    this.occupanciesLength = this.occupanciesLength + 1;
+    return this;
+};
 
 export const DestinationModel: Model<DestinationModel> = model<DestinationModel>('Destination', DestinationSchema);

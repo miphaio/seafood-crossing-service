@@ -4,32 +4,41 @@
  * @description Destination
  */
 
-import { TIME_IN_MILLISECONDS } from "@sudoo/magic";
 import { ObjectID } from "bson";
 import { DestinationConfig } from "../entity/destination";
 import { DestinationModel } from "../model/destination";
+import { TIME_IN_MILLISECONDS } from "@sudoo/magic";
 
 export const createUnsavedDestination = (accountId: ObjectID, options: {
     readonly accessCode: string;
     readonly title: string;
     readonly description: string;
+    readonly duration: number;
+    readonly capacity: number;
 }): DestinationModel => {
 
     const now: number = Date.now();
-    const duration: number = TIME_IN_MILLISECONDS.MINUTE * 5;
-    const expireAt: Date = new Date(now + duration);
+    const expireAt: Date = new Date(now + TIME_IN_MILLISECONDS.HALF_HOUR);
 
     const config: DestinationConfig = {
         _account: accountId,
         accessCode: options.accessCode,
         title: options.title,
         description: options.description,
-        capacity: 8,
-        duration,
+        duration: options.duration,
+        capacity: options.capacity,
         expireAt,
     };
 
     return new DestinationModel(config);
+};
+
+export const getDestinationById = async (id: ObjectID | string): Promise<DestinationModel | null> => {
+
+    const destination: DestinationModel | null = await DestinationModel.findOne({
+        _id: id,
+    });
+    return destination;
 };
 
 export const fetchActiveAvailableDestinations = async (occupancyLimit: number): Promise<DestinationModel[]> => {
@@ -37,7 +46,7 @@ export const fetchActiveAvailableDestinations = async (occupancyLimit: number): 
     const destinations: DestinationModel[] = await DestinationModel.find({
         active: true,
         occupanciesLength: {
-            $lt: occupancyLimit,
+            $lte: occupancyLimit + 1,
         },
     });
 
