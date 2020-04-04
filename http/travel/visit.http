@@ -1,0 +1,12 @@
+POST http://localhost:4000/dev/travel/destination/visit 
+Accept: application/json
+
+{
+	"identifier": "k8kwackd-tk1ya-t6zjhmds1s-ncoe5h36s0",
+    "device": {
+        "name": "new-device",
+        "model": "no-phone",
+        "matcher": "some-matcher"
+    },
+    "destinationId": "5e8807e89cd87e50d078658c"
+}
