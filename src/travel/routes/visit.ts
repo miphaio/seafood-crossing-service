@@ -17,6 +17,8 @@ export type VisitTravelDestinationRequest = {
 export type VisitTravelDestinationResponse = {
 
     readonly succeed: boolean;
+    readonly occupanciesCount: number;
+    readonly reportCount: number;
     readonly accessCode?: string;
 };
 
@@ -34,7 +36,20 @@ export const visitTravelDestinationRoute = async (account: AccountModel, request
 
         return {
             succeed: false,
+            occupanciesCount,
+            reportCount: destination.reports.length,
         };
+    }
+
+    for (const occupancy of destination.occupancies) {
+        if (occupancy._account.equals(account._id)) {
+            return {
+                succeed: true,
+                accessCode: destination.accessCode,
+                occupanciesCount,
+                reportCount: destination.reports.length,
+            };
+        }
     }
 
     destination.addOccupancy(account._id);
@@ -43,5 +58,7 @@ export const visitTravelDestinationRoute = async (account: AccountModel, request
     return {
         succeed: true,
         accessCode: destination.accessCode,
+        occupanciesCount: destination.occupanciesLength,
+        reportCount: destination.reports.length,
     };
 };

@@ -48,6 +48,9 @@ export const fetchActiveAvailableDestinations = async (occupancyLimit: number): 
         occupanciesLength: {
             $lte: occupancyLimit + 1,
         },
+        expireAt: {
+            $gte: new Date(),
+        },
     });
 
     return destinations;

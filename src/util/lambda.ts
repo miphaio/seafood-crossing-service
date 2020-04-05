@@ -45,6 +45,7 @@ export const createLambdaResponse = (
         statusCode: code,
         body: JSON.stringify({
             ...body,
+            accountId: account._id.toString(),
             identifier: account.identifier,
         }),
     };

@@ -10,10 +10,10 @@ import { fetchActiveAvailableDestinations } from "../../service/destination";
 export type FetchTravelDestinationElement = {
 
     readonly destinationId: string;
+    readonly accountId: string;
 
     readonly title: string;
     readonly description: string;
-    readonly accessCode: string;
 
     readonly occupanciesLength: number;
     readonly reportLength: number;
@@ -28,9 +28,9 @@ export const fetchTravelDestinationRoute = async (): Promise<Record<string, any>
     for (const destination of destinations) {
         mapped.push({
             destinationId: destination._id.toString(),
+            accountId: destination._account.toHexString(),
             title: destination.title,
             description: destination.description,
-            accessCode: destination.accessCode,
             occupanciesLength: destination.occupancies.length,
             reportLength: destination.reports.length,
         });
