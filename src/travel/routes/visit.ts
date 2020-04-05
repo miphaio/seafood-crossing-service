@@ -30,6 +30,14 @@ export const visitTravelDestinationRoute = async (account: AccountModel, request
         throw panic.code(ERROR_CODE.DESTINATION_NOT_FOUND, request.destinationId);
     }
 
+    if (destination._account.equals(account._id)) {
+        return {
+            succeed: false,
+            occupanciesCount: destination.occupanciesLength,
+            reportCount: destination.reports.length,
+        };
+    }
+
     const occupanciesCount: number = destination.updateOccupanciesLength();
 
     if (occupanciesCount >= destination.capacity) {
