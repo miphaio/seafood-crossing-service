@@ -12,7 +12,7 @@ mocha := node_modules/.bin/mocha
 main: start-offline
 
 start-offline:
-	@echo "[INFO] Building for development"
+	@echo "[INFO] Starting Offline Server"
 	@NODE_ENV=development serverless offline
 
 deploy:
