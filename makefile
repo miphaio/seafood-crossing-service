@@ -13,14 +13,15 @@ main: start-offline
 
 start-offline:
 	@echo "[INFO] Starting Offline Server"
-	@NODE_ENV=development serverless offline --stage prod
+	@NODE_ENV=development \
+	serverless offline --stage devl
 
 deploy:
 	@echo "[INFO] Deploy"
 	@NODE_ENV=production \
 	AWS_ACCESS_KEY_ID=$(ACKI) \
 	AWS_SECRET_ACCESS_KEY=$(ASAK) \
-	serverless deploy
+	serverless deploy --stage prod
 
 remove:
 	@echo "[INFO] Remove"
