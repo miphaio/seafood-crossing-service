@@ -11,11 +11,16 @@ import { panic, ERROR_CODE } from "../util/panic";
 
 export type AccountEnsureRequest = {
 
+    readonly version: string;
     readonly identifier: string;
     readonly device: DeviceInformation;
 };
 
 export const ensureAccount = async (request: AccountEnsureRequest): Promise<AccountModel> => {
+
+    if (typeof request.version !== 'string') {
+        throw panic.code(ERROR_CODE.AUTHORIZATION_PATTERN_NOT_MATCHED)
+    }
 
     if (typeof request.identifier !== 'string') {
         throw panic.code(ERROR_CODE.AUTHORIZATION_PATTERN_NOT_MATCHED)
