@@ -6,11 +6,14 @@
 
 import { TIME_IN_MILLISECONDS } from "@sudoo/magic";
 import { CloseDatabaseFunction, connectDatabase } from "../../database/connect";
+import { DESTINATION_CATEGORY } from "../../declare/destination";
 import { AccountModel } from "../../model/account";
 import { DestinationModel } from "../../model/destination";
 import { createUnsavedDestination } from "../../service/destination";
 
 export type CreateTravelDestinationRequest = {
+
+    readonly category: DESTINATION_CATEGORY;
 
     readonly title: string;
     readonly description: string;
@@ -24,6 +27,7 @@ export const createTravelDestinationRoute = async (account: AccountModel, reques
     const closeDatabase: CloseDatabaseFunction = await connectDatabase();
 
     const destination: DestinationModel = createUnsavedDestination(account._id, {
+        category: request.category,
         accessCode: request.accessCode,
         title: request.title,
         description: request.description,

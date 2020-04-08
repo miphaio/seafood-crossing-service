@@ -4,12 +4,14 @@
  * @description Destination
  */
 
+import { TIME_IN_MILLISECONDS } from "@sudoo/magic";
 import { ObjectID } from "bson";
+import { DESTINATION_CATEGORY } from "../declare/destination";
 import { DestinationConfig } from "../entity/destination";
 import { DestinationModel } from "../model/destination";
-import { TIME_IN_MILLISECONDS } from "@sudoo/magic";
 
 export const createUnsavedDestination = (accountId: ObjectID, options: {
+    readonly category: DESTINATION_CATEGORY,
     readonly accessCode: string;
     readonly title: string;
     readonly description: string;
@@ -22,6 +24,7 @@ export const createUnsavedDestination = (accountId: ObjectID, options: {
 
     const config: DestinationConfig = {
         _account: accountId,
+        category: options.category,
         accessCode: options.accessCode,
         title: options.title,
         description: options.description,

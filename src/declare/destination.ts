@@ -23,3 +23,8 @@ export const DESTINATION_CATEGORY_LIST = [
     DESTINATION_CATEGORY.SAHARAH,
     DESTINATION_CATEGORY.OTHER,
 ];
+
+export const verifyDestinationCategory = (element: DESTINATION_CATEGORY): boolean => {
+
+    return DESTINATION_CATEGORY_LIST.includes(element);
+};

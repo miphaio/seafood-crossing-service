@@ -9,6 +9,7 @@ import { TIME_IN_MILLISECONDS } from "@sudoo/magic";
 import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult, Context } from 'aws-lambda';
 import { AccountEnsureRequest, ensureAccount } from "../../common/account";
 import { CloseDatabaseFunction, connectDatabase } from "../../database/connect";
+import { DESTINATION_CATEGORY, verifyDestinationCategory } from "../../declare/destination";
 import { AccountModel } from "../../model/account";
 import { createLambdaResponse } from "../../util/lambda";
 import { CreateTravelDestinationRequest, createTravelDestinationRoute } from "../routes/create";
@@ -29,6 +30,7 @@ export const createTravelDestinationHandler: APIGatewayProxyHandler = async (eve
 
     try {
 
+        const category: DESTINATION_CATEGORY = body.directVerify('category', verifyDestinationCategory);
         const title: string = body.directEnsure('title');
         const description: string = body.directEnsure('description');
         const accessCode: string = body.directEnsure('accessCode');
@@ -36,6 +38,7 @@ export const createTravelDestinationHandler: APIGatewayProxyHandler = async (eve
         const account: AccountModel = await ensureAccount(rawBody);
 
         const result: Record<string, any> = await createTravelDestinationRoute(account, {
+            category,
             title,
             description,
             accessCode,
