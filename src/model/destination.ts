@@ -4,9 +4,10 @@
  * @description Destination
  */
 
-import { Document, model, Model, Schema } from "mongoose";
-import { DestinationEntity, DestinationOccupancy } from "../entity/destination";
 import { ObjectID } from "bson";
+import { Document, model, Model, Schema } from "mongoose";
+import { DESTINATION_CATEGORY_LIST } from "../declare/destination";
+import { DestinationEntity, DestinationOccupancy } from "../entity/destination";
 
 const OccupancySchema = new Schema({
 
@@ -46,6 +47,11 @@ const DestinationSchema: Schema = new Schema(
         },
         _account: {
             type: Schema.Types.ObjectId,
+            required: true,
+        },
+        category: {
+            type: String,
+            enum: DESTINATION_CATEGORY_LIST,
             required: true,
         },
         accessCode: {

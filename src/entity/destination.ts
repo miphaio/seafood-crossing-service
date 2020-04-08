@@ -5,6 +5,7 @@
  */
 
 import { ObjectID } from "bson";
+import { DESTINATION_CATEGORY } from "../declare/destination";
 
 export type DestinationOccupancy = {
 
@@ -24,6 +25,7 @@ export type DestinationConfig = {
     readonly accessCode: string;
     readonly _account: ObjectID;
 
+    category: DESTINATION_CATEGORY;
     title: string;
     description: string;
 
