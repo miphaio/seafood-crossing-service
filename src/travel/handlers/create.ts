@@ -7,7 +7,7 @@
 import { Safe, SafeExtract } from "@sudoo/extract";
 import { TIME_IN_MILLISECONDS } from "@sudoo/magic";
 import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult, Context } from 'aws-lambda';
-import { AccountEnsureRequest, ensureAccount } from "../../common/account";
+import { AccountEnsureRequest, verifyAccount } from "../../common/account";
 import { CloseDatabaseFunction, connectDatabase } from "../../database/connect";
 import { DESTINATION_CATEGORY, verifyDestinationCategory } from "../../declare/destination";
 import { AccountModel } from "../../model/account";
@@ -35,7 +35,11 @@ export const createTravelDestinationHandler: APIGatewayProxyHandler = async (eve
         const description: string = body.directEnsure('description');
         const accessCode: string = body.directEnsure('accessCode');
 
-        const account: AccountModel = await ensureAccount(rawBody);
+        const account: AccountModel | null = await verifyAccount(rawBody);
+
+        if (!account) {
+            return createLambdaResponse(403, 'Authorization');
+        }
 
         const result: Record<string, any> = await createTravelDestinationRoute(account, {
             category,

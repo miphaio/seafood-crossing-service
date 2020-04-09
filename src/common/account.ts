@@ -6,7 +6,7 @@
 
 import { DeviceInformation, verifyDeviceInformationFunction } from "../entity/account"
 import { AccountModel } from "../model/account";
-import { createOrGetAccount, getAccountAuthorization } from "../service/account";
+import { createOrGetAccount, getAccountAuthorization, createUnsavedAccount } from "../service/account";
 import { panic, ERROR_CODE } from "../util/panic";
 
 export type AccountEnsureRequest = {
@@ -14,6 +14,13 @@ export type AccountEnsureRequest = {
     readonly version: string;
     readonly identifier: string;
     readonly device: DeviceInformation;
+};
+
+export const initializeAccount = async (device: DeviceInformation): Promise<AccountModel> => {
+
+    const account: AccountModel = createUnsavedAccount(device);
+    await account.save();
+    return account;
 };
 
 export const verifyAccount = async (request: AccountEnsureRequest): Promise<AccountModel | null> => {

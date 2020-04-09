@@ -24,13 +24,19 @@ provider:
     SEAFOOD_CROSSING_DATABASE: ${self:custom.secrets.SEAFOOD_CROSSING_DATABASE}
 
 functions:
+  initializeAccount:
+    handler: src/index.initializeAccount
+    events:
+      - http:
+          method: post
+          path: /account/initialize
   createTravelDestination:
     handler: src/index.createTravelDestination
     events:
       - http:
           method: post
           path: /travel/destination/create
-  fetchTravelDestionation:
+  fetchTravelDestination:
     handler: src/index.fetchTravelDestination
     events:
       - http:
