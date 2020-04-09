@@ -67,13 +67,19 @@ AccountSchema.methods.hasDevice = function (this: AccountModel, target: DeviceIn
     return false;
 };
 
-AccountSchema.methods.addDevice = function (this: AccountModel, target: DeviceInformation): boolean {
+AccountSchema.methods.addDevice = function (this: AccountModel, target: DeviceInformation): AccountModel {
+
+    for (const device of this.devices) {
+        if (device.matcher === target.matcher) {
+            return this;
+        }
+    }
 
     this.devices = [
         ...this.devices,
         target,
     ];
-    return false;
+    return this;
 };
 
 export const AccountModel: Model<AccountModel> = model<AccountModel>('Account', AccountSchema);

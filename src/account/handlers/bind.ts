@@ -1,49 +1,51 @@
 /**
  * @author WMXPY
  * @namespace Account_Handler
- * @description Initialize
+ * @description Bind
  */
 
 import { Safe, SafeExtract } from '@sudoo/extract';
 import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult, Context } from 'aws-lambda';
-import { initializeAccount } from "../../common/account";
 import { CloseDatabaseFunction, connectDatabase } from "../../database/connect";
 import { DeviceInformation } from '../../entity/account';
 import { AccountModel } from "../../model/account";
-import { SwitchProfileModel } from '../../model/switch-profile';
-import { createUnsavedSwitchProfile } from '../../service/switch-profile';
+import { getAccountByIdentifier } from '../../service/account';
 import { createLambdaResponse } from "../../util/lambda";
 
-export type InitializeAccountHandlerRequest = {
-    readonly profileIdentifier: string;
+export type BindAccountHandlerRequest = {
+    readonly identifier: string;
     readonly device: DeviceInformation;
     readonly version: string;
 };
 
-export const initializeAccountHandler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent, _context: Context): Promise<APIGatewayProxyResult> => {
+export const bindAccountHandler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent, _context: Context): Promise<APIGatewayProxyResult> => {
 
     if (event.body === null) {
 
         return createLambdaResponse(400, 'No Body');
     }
-    const rawBody: InitializeAccountHandlerRequest = JSON.parse(event.body);
-    const body: SafeExtract<InitializeAccountHandlerRequest> = Safe.extract(rawBody, new Error('Pattern Not Matched'));
+    const rawBody: BindAccountHandlerRequest = JSON.parse(event.body);
+    const body: SafeExtract<BindAccountHandlerRequest> = Safe.extract(rawBody, new Error('Pattern Not Matched'));
 
     const closeDatabase: CloseDatabaseFunction = await connectDatabase();
 
     try {
 
-        const profileIdentifier: string = body.directVerify('profileIdentifier', (identifier: string) => {
-            return typeof identifier === 'string';
+        const identifier: string = body.directVerify('identifier', (target: string) => {
+            return typeof target === 'string';
         });
         const device: DeviceInformation = body.directVerify('device', (info: DeviceInformation) => {
             return typeof info === 'object';
         });
 
-        const profile: SwitchProfileModel = createUnsavedSwitchProfile(profileIdentifier);
+        const account: AccountModel | null = await getAccountByIdentifier(identifier);
 
-        await profile.save();
-        const account: AccountModel = await initializeAccount(device);
+        if (!account) {
+            return createLambdaResponse(403, 'Authorization');
+        }
+
+        account.addDevice(device);
+        await account.save();
 
         return createLambdaResponse(200, {}, account);
     } catch (error) {

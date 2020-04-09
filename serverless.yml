@@ -24,6 +24,12 @@ provider:
     SEAFOOD_CROSSING_DATABASE: ${self:custom.secrets.SEAFOOD_CROSSING_DATABASE}
 
 functions:
+  bindAccount:
+    handler: src/index.bindAccount
+    events:
+      - http:
+          method: post
+          path: /account/bind
   initializeAccount:
     handler: src/index.initializeAccount
     events:
