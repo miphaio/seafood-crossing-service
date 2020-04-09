@@ -48,6 +48,7 @@ const DestinationSchema: Schema = new Schema(
         _account: {
             type: Schema.Types.ObjectId,
             required: true,
+            index: true,
         },
         category: {
             type: String,

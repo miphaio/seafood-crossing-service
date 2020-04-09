@@ -4,9 +4,13 @@
  * @description Switch Profile
  */
 
+import { ObjectID } from "bson";
+
 export type SwitchProfileConfig = {
 
     readonly profileIdentifier: string;
+
+    readonly _account: ObjectID;
 };
 
 export type SwitchProfileEntity = {

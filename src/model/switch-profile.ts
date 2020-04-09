@@ -15,6 +15,11 @@ const SwitchProfileSchema: Schema = new Schema(
             default: true,
             index: true,
         },
+        _account: {
+            type: Schema.Types.ObjectId,
+            required: true,
+            index: true,
+        },
         profileIdentifier: {
             type: String,
             required: true,

@@ -40,10 +40,10 @@ export const initializeAccountHandler: APIGatewayProxyHandler = async (event: AP
             return typeof info === 'object';
         });
 
-        const profile: SwitchProfileModel = createUnsavedSwitchProfile(profileIdentifier);
+        const account: AccountModel = await initializeAccount(device);
+        const profile: SwitchProfileModel = createUnsavedSwitchProfile(profileIdentifier, account._id);
 
         await profile.save();
-        const account: AccountModel = await initializeAccount(device);
 
         return createLambdaResponse(200, {}, account);
     } catch (error) {
