@@ -1,0 +1,12 @@
+POST http://localhost:4000/devl/account/initialize
+Accept: application/json
+
+{
+    "profileIdentifier": "123123123123",
+    "device": {
+        "name": "some-name",
+        "model": "no-phone",
+        "matcher": "some-matcher"
+    },
+    "version": "1.1.0"
+}

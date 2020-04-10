@@ -10,6 +10,11 @@ custom:
     includeModules: true
   serverless-offline:
     httpPort: 4000
+  customDomain:
+    domainName: "seafood-crossing.api.mipha.io"
+    basePath: ""
+    stage: prod
+    createRoute53Record: true
 
 provider:
   name: aws
@@ -56,5 +61,6 @@ functions:
           path: /travel/destination/visit
 
 plugins:
+  - serverless-domain-manager
   - serverless-webpack
   - serverless-offline

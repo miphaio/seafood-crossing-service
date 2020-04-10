@@ -21,14 +21,21 @@ deploy:
 	@NODE_ENV=production \
 	AWS_ACCESS_KEY_ID=$(ACKI) \
 	AWS_SECRET_ACCESS_KEY=$(ASAK) \
-	serverless deploy --stage prod
+	serverless deploy --stage prod --region us-east-1
 
 remove:
 	@echo "[INFO] Remove"
 	@NODE_ENV=production \
 	AWS_ACCESS_KEY_ID=$(ACKI) \
 	AWS_SECRET_ACCESS_KEY=$(ASAK) \
-	serverless remove
+	serverless remove --stage prod --region us-east-1
+
+create-domain:
+	@echo "[INFO] Creating Domain"
+	@NODE_ENV=production \
+	AWS_ACCESS_KEY_ID=$(ACKI) \
+	AWS_SECRET_ACCESS_KEY=$(ASAK) \
+	serverless create_domain --stage prod --region us-east-1
 
 tests:
 	@echo "[INFO] Testing with Mocha"

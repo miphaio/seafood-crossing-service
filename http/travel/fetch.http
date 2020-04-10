@@ -1,4 +1,4 @@
-POST http://localhost:4000/dev/travel/destination/fetch 
+POST http://localhost:4000/devl/travel/destination/fetch 
 Accept: application/json
 
 {
