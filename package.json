@@ -1,6 +1,6 @@
 {
   "name": "@mipha/seafood-crossing-service",
-  "version": "1.5.0",
+  "private": true,
   "description": ":tropical_fish: Service for seafood crossing",
   "directories": {
     "doc": "docs"
