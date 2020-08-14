@@ -17,24 +17,24 @@
   "homepage": "https://github.com/miphaio/seafood-crossing-service#readme",
   "dependencies": {
     "@sudoo/extract": "^1.4.2",
-    "@sudoo/magic": "^1.6.0",
+    "@sudoo/magic": "^1.8.0",
     "@sudoo/random": "^2.1.1",
-    "mongoose": "^5.9.7",
-    "source-map-support": "^0.5.16"
+    "mongoose": "^5.9.29",
+    "source-map-support": "^0.5.19"
   },
   "devDependencies": {
-    "@sudoo/io": "^1.7.0",
+    "@sudoo/io": "^1.8.0",
     "@sudoo/mock": "^1.3.0",
-    "@sudoo/triforce": "^2.2.1",
-    "@sudoo/triforce-mongoose-dev": "^1.4.0",
+    "@sudoo/triforce": "^2.7.11",
+    "@sudoo/triforce-mongoose-dev": "^1.4.3",
     "@types/aws-lambda": "^8.10.17",
-    "@types/source-map-support": "^0.5.1",
+    "@types/source-map-support": "^0.5.2",
     "serverless-domain-manager": "^3.3.1",
     "serverless-offline": "^6.1.4",
     "serverless-webpack": "^5.3.1",
-    "ts-loader": "^6.2.2",
-    "webpack": "^4.42.1",
-    "webpack-node-externals": "^1.7.2"
+    "ts-loader": "^8.0.2",
+    "webpack": "^4.44.1",
+    "webpack-node-externals": "^2.5.1"
   },
   "nyc": {
     "extension": [
