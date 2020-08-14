@@ -15,6 +15,7 @@ import { fetchTravelDestinationRoute } from "../routes/fetch";
 export type FetchTravelDestinationHandlerRequest = {
 } & AccountEnsureRequest;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const fetchTravelDestinationHandler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent, _context: Context): Promise<APIGatewayProxyResult> => {
 
     if (event.body === null) {

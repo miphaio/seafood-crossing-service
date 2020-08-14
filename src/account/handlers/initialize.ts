@@ -5,6 +5,7 @@
  */
 
 import { Safe, SafeExtract } from '@sudoo/extract';
+import { HTTP_RESPONSE_CODE } from '@sudoo/magic';
 import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult, Context } from 'aws-lambda';
 import { initializeAccount } from "../../common/account";
 import { CloseDatabaseFunction, connectDatabase } from "../../database/connect";
@@ -20,11 +21,12 @@ export type InitializeAccountHandlerRequest = {
     readonly version: string;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const initializeAccountHandler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent, _context: Context): Promise<APIGatewayProxyResult> => {
 
     if (event.body === null) {
 
-        return createLambdaResponse(400, 'No Body');
+        return createLambdaResponse(HTTP_RESPONSE_CODE.BAD_REQUEST, 'No Body');
     }
     const rawBody: InitializeAccountHandlerRequest = JSON.parse(event.body);
     const body: SafeExtract<InitializeAccountHandlerRequest> = Safe.extract(rawBody, new Error('Pattern Not Matched'));
@@ -45,10 +47,10 @@ export const initializeAccountHandler: APIGatewayProxyHandler = async (event: AP
 
         await profile.save();
 
-        return createLambdaResponse(200, {}, account);
+        return createLambdaResponse(HTTP_RESPONSE_CODE.OK, {}, account);
     } catch (error) {
 
-        return createLambdaResponse(400, error.message);
+        return createLambdaResponse(HTTP_RESPONSE_CODE.BAD_REQUEST, error.message);
     } finally {
 
         await closeDatabase();

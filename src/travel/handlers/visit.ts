@@ -16,6 +16,7 @@ import { VisitTravelDestinationRequest, VisitTravelDestinationResponse, visitTra
 export type VisitTravelDestinationHandlerRequest = {
 } & VisitTravelDestinationRequest & AccountEnsureRequest;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const visitTravelDestinationHandler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent, _context: Context): Promise<APIGatewayProxyResult> => {
 
     if (event.body === null) {

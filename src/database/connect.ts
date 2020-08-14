@@ -26,6 +26,7 @@ export const connectDatabase = async (): Promise<CloseDatabaseFunction> => {
         },
     );
 
+    // eslint-disable-next-line @typescript-eslint/require-await
     return async () => {
         Mongoose.disconnect();
     };

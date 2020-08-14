@@ -5,6 +5,7 @@
  */
 
 import { Safe, SafeExtract } from '@sudoo/extract';
+import { HTTP_RESPONSE_CODE } from '@sudoo/magic';
 import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult, Context } from 'aws-lambda';
 import { CloseDatabaseFunction, connectDatabase } from "../../database/connect";
 import { DeviceInformation } from '../../entity/account';
@@ -18,11 +19,12 @@ export type BindAccountHandlerRequest = {
     readonly version: string;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const bindAccountHandler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent, _context: Context): Promise<APIGatewayProxyResult> => {
 
     if (event.body === null) {
 
-        return createLambdaResponse(400, 'No Body');
+        return createLambdaResponse(HTTP_RESPONSE_CODE.BAD_REQUEST, 'No Body');
     }
     const rawBody: BindAccountHandlerRequest = JSON.parse(event.body);
     const body: SafeExtract<BindAccountHandlerRequest> = Safe.extract(rawBody, new Error('Pattern Not Matched'));
@@ -41,16 +43,16 @@ export const bindAccountHandler: APIGatewayProxyHandler = async (event: APIGatew
         const account: AccountModel | null = await getAccountByIdentifier(identifier);
 
         if (!account) {
-            return createLambdaResponse(403, 'Authorization');
+            return createLambdaResponse(HTTP_RESPONSE_CODE.UNAUTHORIZED, 'Authorization');
         }
 
         account.addDevice(device);
         await account.save();
 
-        return createLambdaResponse(200, {}, account);
+        return createLambdaResponse(HTTP_RESPONSE_CODE.OK, {}, account);
     } catch (error) {
 
-        return createLambdaResponse(400, error.message);
+        return createLambdaResponse(HTTP_RESPONSE_CODE.BAD_REQUEST, error.message);
     } finally {
 
         await closeDatabase();
