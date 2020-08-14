@@ -4,6 +4,7 @@
  * @description Fetch
  */
 
+import { HTTP_RESPONSE_CODE } from "@sudoo/magic";
 import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult, Context } from 'aws-lambda';
 import { AccountEnsureRequest, verifyAccount } from "../../common/account";
 import { CloseDatabaseFunction, connectDatabase } from "../../database/connect";
@@ -18,7 +19,7 @@ export const fetchTravelDestinationHandler: APIGatewayProxyHandler = async (even
 
     if (event.body === null) {
 
-        return createLambdaResponse(400, 'No Body');
+        return createLambdaResponse(HTTP_RESPONSE_CODE.BAD_REQUEST, 'No Body');
     }
     const rawBody: FetchTravelDestinationHandlerRequest = JSON.parse(event.body);
     const closeDatabase: CloseDatabaseFunction = await connectDatabase();
@@ -28,15 +29,15 @@ export const fetchTravelDestinationHandler: APIGatewayProxyHandler = async (even
         const account: AccountModel | null = await verifyAccount(rawBody);
 
         if (!account) {
-            return createLambdaResponse(403, 'Authorization');
+            return createLambdaResponse(HTTP_RESPONSE_CODE.UNAUTHORIZED, 'Authorization');
         }
 
         const result: Record<string, any> = await fetchTravelDestinationRoute();
 
-        return createLambdaResponse(200, result, account);
+        return createLambdaResponse(HTTP_RESPONSE_CODE.OK, result, account);
     } catch (error) {
 
-        return createLambdaResponse(400, error.message);
+        return createLambdaResponse(HTTP_RESPONSE_CODE.BAD_REQUEST, error.message);
     } finally {
 
         await closeDatabase();
